@@ -5,6 +5,20 @@ import 'book.dart';
 
 class BookService extends ChangeNotifier {
   List<Book> bookList = []; // 책 목록
+  List<Book> likedBookList = [];
+
+  void toggleLikeBook({required Book book}) {
+    String bookId = book.id;
+    if (likedBookList.map((book) => book.id).contains(bookId)) {
+      // book.id 순회
+      likedBookList.removeWhere((book) =>
+          book.id ==
+          bookId); // toggleLikeBook 함수가 인자로 받는 book과 id가 같은 Book이 likedBookList 내에 있다면 제거
+    } else {
+      likedBookList.add(book);
+    }
+    notifyListeners();
+  }
 
   void search(String q) async {
     bookList.clear(); // 검색 버튼 누를때 이전 데이터들을 지워주기
